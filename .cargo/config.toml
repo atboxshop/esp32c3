@@ -1,5 +1,5 @@
 [target.riscv32imc-unknown-none-elf]
-runner = "espflash --monitor /dev/ttyUSB1"
+runner = "espflash --monitor /dev/ttyUSB0"
 
 [build]
 rustflags = [
