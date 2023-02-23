@@ -12,10 +12,6 @@ use esp32c3_hal::{
 };
 use esp_backtrace as _;
 
-use smart_leds::SmartLedsWrite;
-use smart_leds::RGB8;
-use smart_leds::brightness;
-
 #[entry]
 fn main() -> ! 
 {
@@ -39,8 +35,6 @@ fn main() -> !
     // Set GPIO5 as an output, and set its state high initially.
     let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
     let mut led = io.pins.gpio5.into_push_pull_output();
-    let rgbpin = io.pins.gpio8.into_push_pull_output();
-    let mut neopixel = SmartLedsWrite(rgbpin,)
     led.set_high().unwrap();
 
     // Initialize the Delay peripheral, and use it to toggle the LED state in a
