@@ -15,8 +15,6 @@ use esp_backtrace as _;
 use smart_leds::SmartLedsWrite;
 use smart_leds::RGB8;
 use smart_leds::brightness;
-use ws2812_timer_delay as ws2812;
-const NUM_LEDS: usize = 1;
 
 #[entry]
 fn main() -> ! 
@@ -41,37 +39,16 @@ fn main() -> !
     // Set GPIO5 as an output, and set its state high initially.
     let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
     let mut led = io.pins.gpio5.into_push_pull_output();
-    let neopixel_pin = io.pins.gpio8.into_push_pull_output();
-    let mut neopixel = ws2812::Ws2812::new(timer_group0.timer0, neopixel_pin);
-    let mut data = [RGB8::default(); NUM_LEDS];
-
+    let rgbpin = io.pins.gpio8.into_push_pull_output();
+    let mut neopixel = SmartLedsWrite(rgbpin,)
     led.set_high().unwrap();
 
     // Initialize the Delay peripheral, and use it to toggle the LED state in a
     // loop.
     let mut delay = Delay::new(&clocks);
-    fn wheel(mut wheel_pos: u8) -> RGB8 {
-        wheel_pos = 255 - wheel_pos;
-        if wheel_pos < 85 {
-            return (255 - wheel_pos * 3, 0, wheel_pos * 3).into()
-        }
-        if wheel_pos < 170 {
-            wheel_pos -=85;
-            return (0, wheel_pos * 3, 255 - wheel_pos * 3).into()
-        }
-        wheel_pos -= 170;
-        (wheel_pos*3, 255 - wheel_pos * 3, 0).into()
-    }
+   
     loop {
         led.toggle().unwrap();
-        for j in 0..(256*5) 
-        {
-            for i in 0..NUM_LEDS {
-                data[i] = wheel((((i * 256) as u16 / NUM_LEDS as u16 + j as u16) & 255) as u8);
-            }
-        neopixel.write(brightness(data.iter().cloned(), 32)).unwrap();
-        delay.delay_ms(5u8);
-        }
-        delay.delay_ms(100u32);
+        delay.delay_ms(1000u32);
     }
 }

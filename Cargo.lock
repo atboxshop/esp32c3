@@ -164,7 +164,6 @@ dependencies = [
  "esp32c3-hal",
  "riscv-rt",
  "smart-leds",
- "ws2812-timer-delay",
 ]
 
 [[package]]
@@ -529,14 +528,3 @@ name = "void"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"
-
-[[package]]
-name = "ws2812-timer-delay"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b9b339c25c6d44131844c4c5ac0c7344d32080daaa38a6e9beaba927cbe28800"
-dependencies = [
- "embedded-hal",
- "nb 0.1.3",
- "smart-leds-trait",
-]
